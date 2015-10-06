@@ -2,4 +2,14 @@ extends layout
 
 block content
   h1= title
-  a(href='/new_user') Create user
+  a(href='/new_user') Create new user
+  table(style='padding: 10px')
+    tr
+      th Name
+      th Email
+    for each in allUsers
+      tr
+        td= each.name
+        td= each.email
+        td
+          a(href='/' + each._id + '/delete') Delete
