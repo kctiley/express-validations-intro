@@ -11,12 +11,20 @@ block content
     table(style= 'width: 50%; border: 2px solid black; text-align: center')
       tr
         div
-          td(style= 'padding: 20px') Name: 
-            input(type= 'text', name= 'inputName', id= 'inputName', style= 'width: 30%; height: 24px', value= filledName || '')  
+          td(style= 'padding: 20px', class=changeName || '') Name: 
+            input(type= 'text', name= 'inputName', id= 'inputName', style= 'width: 30%; height: 24px', value= filledName || '')
+            if errName
+              for each in errName
+                tr
+                  td(style='color: red')= each 
       tr
         div
-          td(style= 'padding: 20px') Email: 
+          td(style= 'padding: 20px',  class= changeEmail || '',) Email: 
             input(type= 'text', name= 'inputEmail', id= 'inputEmail', style= 'width: 30%; height: 24px', value= filledEmail || '') 
+            if errEmail
+              for eachMail in errEmail
+                tr
+                  td(style='color: red')= eachMail 
       tr
         div
           td(style= 'padding: 20px') 

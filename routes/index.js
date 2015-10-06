@@ -22,19 +22,29 @@ router.get('/new_user', function(req, res, next) {
 
 router.post('/index', function(req, res, next) {
   var errors = [];
+  var errName = [];
+  var errEmail = [];
+  var redoName;
+  var redoEmail;
   if (!req.body.inputName.trim()) {
     errors.push("Name can't be blank");
-    document.getElementById("inputName").style.backgroundColor = "red";
+    errName.push("Name can't be blank");
+    redoName = 'redoName';
+    //document.getElementById("inputName").style.backgroundColor = "red";
   }
   if (!req.body.inputEmail.trim()) {
     errors.push("Email can't be blank")
+    errEmail.push("Email can't be blank")
+    redoEmail = 'redoEmail';
   }
   usersCollection.find({email: req.body.inputEmail},function(err, record){
     if(record.length){
       errors.push("Email not unique")
+      errEmail.push("Email not unique")
+      redoEmail = 'redoEmail';
     }
     if (errors.length) {
-      res.render('new_user', {errors: errors, filledName: req.body.inputName, filledEmail: req.body.inputEmail})
+      res.render('new_user', {errName: errName, errEmail: errEmail,  errors: errors, filledName: req.body.inputName, filledEmail: req.body.inputEmail, changeEmail: redoEmail, changeName: redoName })
     } else {
       usersCollection.insert({name: req.body.inputName, email: req.body.inputEmail}, function () {
         res.redirect('/index')
