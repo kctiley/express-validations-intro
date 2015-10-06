@@ -21,14 +21,27 @@ router.get('/new_user', function(req, res, next) {
 });
 
 router.post('/index', function(req, res, next) {
-  console.log("Firstname...." + req.body.inputFirstName);
-  console.log("Email......" + req.body.inputEmail)
-  usersCollection.insert({name: req.body.inputFirstName, email: req.body.inputEmail}, function(err, record){
-    usersCollection.find({}, function(err, record){
-      res.render('index', {title: 'New user created', allUsers: record});
-    });
-  });
-});
+  var errors = [];
+  if (!req.body.inputName.trim()) {
+    errors.push("Name can't be blank")
+  }
+  if (!req.body.inputEmail.trim()) {
+    errors.push("Email can't be blank")
+  }
+  usersCollection.find({email: req.body.inputEmail},function(err, record){
+    if(record.length){
+      errors.push("Email not unique")
+    }
+    if (errors.length) {
+      res.render('new_user', {errors: errors})
+    } else {
+      usersCollection.insert({name: req.body.inputName, email: req.body.inputEmail}, function () {
+        res.redirect('/index')
+      })
+    }
+  })
+})
+
 
 router.get('/:_id/delete', function(req, res, next){
   usersCollection.remove({_id: req.params._id}, function(err, record){

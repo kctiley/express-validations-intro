@@ -2,12 +2,17 @@ extends layout
 
 block content
   h1= title
+  table
+    if errors 
+      for error in errors
+        tr
+          td(style='color: red')= error
   form(name= 'formNewUser', id='formNewUser', action='/index', method='post')
     table(style= 'width: 50%; border: 2px solid black; text-align: center')
       tr
         div
-          td(style= 'padding: 20px') First Name: 
-            input(type= 'text', name= 'inputFirstName', id= 'inputFirstName', style= 'width: 30%; height: 24px')
+          td(style= 'padding: 20px') Name: 
+            input(type= 'text', name= 'inputName', id= 'inputName', style= 'width: 30%; height: 24px')
       tr
         div
           td(style= 'padding: 20px') Email: 
