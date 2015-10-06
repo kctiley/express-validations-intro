@@ -23,7 +23,8 @@ router.get('/new_user', function(req, res, next) {
 router.post('/index', function(req, res, next) {
   var errors = [];
   if (!req.body.inputName.trim()) {
-    errors.push("Name can't be blank")
+    errors.push("Name can't be blank");
+    document.getElementById("inputName").style.backgroundColor = "red";
   }
   if (!req.body.inputEmail.trim()) {
     errors.push("Email can't be blank")
@@ -33,7 +34,7 @@ router.post('/index', function(req, res, next) {
       errors.push("Email not unique")
     }
     if (errors.length) {
-      res.render('new_user', {errors: errors})
+      res.render('new_user', {errors: errors, filledName: req.body.inputName, filledEmail: req.body.inputEmail})
     } else {
       usersCollection.insert({name: req.body.inputName, email: req.body.inputEmail}, function () {
         res.redirect('/index')

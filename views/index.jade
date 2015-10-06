@@ -2,14 +2,16 @@ extends layout
 
 block content
   h1= title
+  if successMessage
+    h2 successMessage
   a(href='/new_user') Create new user
   table(style='padding: 10px')
     tr
-      th Name
-      th Email
+      th(style='padding: 10px') Name
+      th(style='padding: 10px') Email
     for each in allUsers
       tr
-        td= each.name
-        td= each.email
-        td
+        td(style='padding: 10px')= each.name
+        td(style='padding: 10px')= each.email
+        td(style='padding: 10px')
           a(href='/' + each._id + '/delete') Delete
